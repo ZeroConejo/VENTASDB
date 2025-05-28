@@ -30,5 +30,25 @@
             }
             return $proveedor;
         }
+
+        public function borrar($idProveedor){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "delete from proveedor where idproveedor = :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":id", $idProveedor);
+            $ps->execute();
+        }
+
+        public function modificar(Proveedor $proveedor){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "update proveedor set nombre = :nom, ruc = :ruc where idproveedor = :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":nom", $proveedor->getNombre());
+            $ps->bindParam(":ruc", $proveedor->getRuc());
+            $ps->bindParam(":id", $proveedor->getIdProveedor());
+            $ps->execute();
+        }
     }
 ?>

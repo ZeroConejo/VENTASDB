@@ -31,5 +31,25 @@
             }
             return $familias;
         }
+
+        public function borrar($IdFamilia){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "delete from familia where idfamilia = :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":id", $IdFamilia);
+            $ps->execute();
+        }
+
+        public function modificar(Familia $familia){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "update familia set nombre = :nom, descripcion = :des where idfamilia = :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":nom", $familia->getNombre());
+            $ps->bindParam(":des", $familia->getDescripcion());
+            $ps->bindParam(":id", $familia->getIdFamilia());
+            $ps->execute();
+        }
     }
 ?>

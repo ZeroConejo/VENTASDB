@@ -37,5 +37,28 @@
             }
             return $cliente;
         }
+
+        public function borrar($IdCliente){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "delete from cliente where idcliente = :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":id", $IdCliente);
+            $ps->execute();
+        }
+
+        public function modificar(Cliente $cliente){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "update cliente set nombres= :nom, apellidos= :ape, dni= :dni, celular= :cel, direccion= :dir where idcliente= :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":id", $cliente->getIdCliente());
+            $ps->bindParam(":nom", $cliente->getNombres());
+            $ps->bindParam(":ape", $cliente->getApellidos());
+            $ps->bindParam(":dni", $cliente->getDni());
+            $ps->bindParam(":cel", $cliente->getCelular());
+            $ps->bindParam(":dir", $cliente->getDireccion());
+            $ps->execute();
+        }
     }
 ?>

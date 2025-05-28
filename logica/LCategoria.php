@@ -31,5 +31,24 @@
             }
             return $categorias;
         }
+
+        public function borrar($idcategoria){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "delete from categoria where idcategoria = :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":id", $idcategoria);
+            $ps->execute();
+        }
+
+        public function modificar(Categoria $categoria){
+            $db = new DB();
+            $cn = $db->conectar();
+            $sql = "update categoria set nombre = :nom, idfamilia= :idfam where idcategoria = :id";
+            $ps = $cn->prepare($sql);
+            $ps->bindParam(":nom", $categoria->getNombre());
+            $ps->bindParam(":idfam", $categoria->getIdFamilia());
+            $ps->execute();
+        }
     }
 ?>
